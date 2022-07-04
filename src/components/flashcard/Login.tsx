@@ -16,17 +16,15 @@ const LOGIN = gql`
 
 const Login = () => {
   let email: HTMLInputElement | null, psw: HTMLInputElement | null;
-  const [login, { data, loading, error }] = useMutation(LOGIN);
-  console.log("🚀 ~ file: Login.tsx ~ line 20 ~ Login ~ data", loading)
+  const [login, { loading, error }] = useMutation(LOGIN);
   let navigate = useNavigate();
   const token = localStorage.getItem("token");
-
 
   useEffect(() => {
     if (token) {
       return navigate("/flashcards");
     }
-  }, [token, navigate, data]);
+  }, [token, navigate]);
 
   return (
     <form
@@ -38,8 +36,11 @@ const Login = () => {
               email: email.value,
               password: psw.value,
             },
+          }).then((res) => {
+            const { token } = res.data.login;
+            localStorage.setItem("token", token);
+            navigate("/flashcards");
           });
-        data && localStorage.setItem("token", data.login.token);
       }}
     >
       {loading && <div>Loading...</div>}
@@ -83,9 +84,7 @@ const Login = () => {
           <p className="text-red text-xs italic">Please choose a password.</p>
         </div>
         <div className="flex items-center justify-between">
-          <button
-            className="bg-blue-500 hover:bg-blue-dark text-white font-bold py-2 px-4 rounded"
-          >
+          <button className="bg-blue-500 hover:bg-blue-dark text-white font-bold py-2 px-4 rounded">
             Sign In
           </button>
           <span className="inline-block align-baseline font-bold text-sm text-blue hover:text-blue-darker">

@@ -12,7 +12,6 @@ const SIGNUP = gql`
 `;
 
 const Signup = () => {
-
   let navigate = useNavigate();
   let email: HTMLInputElement | null,
     psw: HTMLInputElement | null,
@@ -37,7 +36,7 @@ const Signup = () => {
       >
         <form
           method="POST"
-          action="https://getform.io/f/a699a1b2-f225-434e-b317-1fbbde8e006c"
+          action=""
           className="flex flex-col max-w-[600px] w-full"
           onSubmit={(e) => {
             e.preventDefault();
@@ -48,6 +47,10 @@ const Signup = () => {
                   password: psw.value,
                   name: name.value,
                 },
+              }).then((res) => {
+                const { token } = res.data.signup;
+                localStorage.setItem("token", token);
+                navigate("/flashcards");
               });
           }}
         >

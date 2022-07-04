@@ -86,7 +86,7 @@ export interface User2 {
 }
 
 export interface Category {
-  id: number
+  id?: number
   name: string
   flashCards?: [FlashCard]
 }

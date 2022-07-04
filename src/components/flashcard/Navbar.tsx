@@ -3,14 +3,10 @@ import { FaBars, FaTimes } from "react-icons/fa";
 import Logo from "../../assets/logo.png";
 import { Link } from "react-scroll";
 import { Link as LinkRoute } from "react-router-dom";
-import { FiLogOut } from "react-icons/fi";
-import { useNavigate } from "react-router-dom";
 
 const Navbar = () => {
   const [nav, setNav] = useState(false);
   const handleClick = () => setNav(!nav);
-  const token = localStorage.getItem("token");
-  let navigate = useNavigate();
 
   return (
     <div className="shadow-lg shadow-[#040c16] bg-gradient-to-r via-blue-50 to-gray-100 from-white fixed w-full h-[80px] flex justify-between items-center px-4 md:px-12 text-gray-900">
@@ -21,29 +17,13 @@ const Navbar = () => {
       {/* menu */}
       <ul className="hidden md:flex">
         <li>
-          <LinkRoute to="/" >
-            Home
-          </LinkRoute>
+          <LinkRoute to="/">Home</LinkRoute>
         </li>
-        {!token && (
-          <li>
-            <Link to="contact" smooth={true} duration={500}>
-              SingUp
-            </Link>
-          </li>
-        )}
-        {token && (
-          <li
-            className="flex items-center"
-            onClick={() => {
-              localStorage.setItem("token", "");
-              navigate("/");
-            }}
-          >
-            <FiLogOut />
-            <span className="px-2">Logout</span>
-          </li>
-        )}
+        <li>
+          <Link to="contact" smooth={true} duration={500}>
+            SingUp
+          </Link>
+        </li>
       </ul>
 
       {/* Hamburger */}

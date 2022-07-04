@@ -12,9 +12,13 @@ import {
   gql,
 } from "@apollo/client";
 
+const token = localStorage.getItem("token");
 const client = new ApolloClient({
   uri: "https://flashcards-prisma-typescript.herokuapp.com/",
   cache: new InMemoryCache(),
+  headers: {
+    authorization: token ? `Bearer ${token}` : "",
+  },
 });
 
 ReactDOM.render(
